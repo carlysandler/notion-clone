@@ -1,10 +1,10 @@
 "use client"
-import { useConvexAuth } from "convex/react";
-import { SignInButton } from "@clerk/clerk-react";
-import Link from "next/link";
+import { useConvexAuth } from "convex/react"
+import { SignInButton } from "@clerk/clerk-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/spinner"
 
 export const Heading = () => {
   const { isAuthenticated, isLoading } = useConvexAuth()
@@ -12,9 +12,7 @@ export const Heading = () => {
     <div className="max-w-3xl space-y-4">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
         Your Ideas, Documents & Plans. Unified. Welcome to{" "}
-        <span className="underline">
-          Notion
-        </span>
+        <span className="underline">Notion</span>
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium">
         Notion is the connected workspace where <br />
