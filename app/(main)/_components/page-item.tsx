@@ -3,7 +3,9 @@ import {
 	LucideIcon,
 	ChevronDown,
 	ChevronRight,
-	Plus
+	Plus,
+	MoreHorizontal,
+	Trash
 } from "lucide-react"
 
 import React from "react";
@@ -17,6 +19,15 @@ import {
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation"
 import { toast } from "sonner";
+import { 
+	DropdownMenu, 
+	DropdownMenuContent, 
+	DropdownMenuSeparator, 
+	DropdownMenuTrigger, 
+	DropdownMenuItem 
+} from "@/components/ui/dropdown-menu";
+import { useUser } from "@clerk/clerk-react";
+
 
 
 interface ItemProps {
@@ -44,8 +55,10 @@ export const PageItem = ({
 	icon: Icon,
 	onClick
 }: ItemProps) => {
+	const { user } = useUser()
 	const router = useRouter()
 	const createDocument = useMutation(api.documents.create)
+	const archiveDocuument = useMutation(api.documents.archive)
 	
 	const ChevronIcon = expanded ? ChevronDown : ChevronRight
 	// https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent
@@ -71,6 +84,19 @@ export const PageItem = ({
       success: "New note created!",
       error: "Failed to create a new note."
     });
+	}
+
+	const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		event.stopPropagation()
+		if (!id) return
+		const promise = archiveDocuument({ id })
+			.then(() => router.push("/documents"))
+		
+		toast.promise(promise, {
+			loading: "Archiving note...",
+			success: "Note moved to trash!",
+			error: "Failed to archive note."
+		})
 	}
 
 	return (
@@ -112,6 +138,34 @@ export const PageItem = ({
 			}
 		{!!id && (
 			<div className="flex items-center gap-x-2 ml-auto">
+				<DropdownMenu>
+					<DropdownMenuTrigger
+						onClick={(e) =>  e.stopPropagation()}
+						asChild
+					>
+						<div
+							role="button"
+							className="opacity-0 group-hover:opacity-100 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+						>
+							<MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+						</div>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
+						className="w-60"
+						side="right"
+						align="start"
+						forceMount
+					>
+						<DropdownMenuItem onClick={onArchive}>
+							<Trash className="h-4 w-4 mr-2"/>
+							Delete
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<p className="text-xs text-muted-foreground p-2">
+							Last edited by: {user?.fullName}
+						</p>
+					</DropdownMenuContent>
+				</DropdownMenu>
 				<div
 					role="button"
 					onClick={onCreate}
