@@ -106,7 +106,108 @@ export const archive = mutation({
 		})
 		
 		recursiveArchive(args.id)
-		
+
 		return document
 	}
 })
+
+export const getTrash = query({
+	handler: async (ctx, args) => {
+		const user = await ctx.auth.getUserIdentity()
+		if (!user) {
+			throw new Error("User is not authenticated")
+		}
+		const userId = user.subject
+
+		const documents = await ctx.db
+		.query("documents")
+		.withIndex("by_user", (q) => q.eq("userId", userId))
+		.filter((q) => (
+			q.eq(q.field("isArchived"), true)
+		))
+		.order("desc")
+		.collect()
+
+		return documents
+
+	}
+})
+
+export const restore = mutation({
+	args: {
+		id: v.id("documents")
+	},
+	handler: async (ctx, args) => {
+		const user = await ctx.auth.getUserIdentity()
+		if (!user) {
+			throw new Error("User is not authenticated")
+		}
+		const userId = user.subject
+		const existingDoc = await ctx.db.get(args.id)
+		if (!existingDoc) {
+			throw new Error("Document not found")
+		}
+		if (existingDoc.userId !== userId) {
+			throw new Error("Unauthorized action")
+		}
+
+		const recursiveRestore = async (documentId: Id<"documents">) => {
+			const children = await ctx.db
+				.query("documents")
+				.withIndex("by_user_parent", (q) => (
+					q
+						.eq("userId", userId)
+						.eq("parentDocument", documentId)
+				))
+				.collect()
+
+			for (const child of children) {
+				await ctx.db.patch(child._id, {
+					isArchived: false
+				})
+				await recursiveRestore(child._id)
+			}
+		}
+		const options: Partial<Doc<"documents">> = {
+			isArchived: false
+		}
+		if (existingDoc.parentDocument) {
+			const parent = await ctx.db.get(existingDoc.parentDocument)
+			if (parent?.isArchived) {
+				options.parentDocument = undefined
+			}
+		}
+		const document = await ctx.db.patch(args.id, options)
+
+		recursiveRestore(args.id)
+
+		return document
+	}
+
+})
+
+export const remove = mutation({
+	args: {
+		id: v.id("documents")
+	},
+	handler: async (ctx, args) => {
+		const user = await ctx.auth.getUserIdentity()
+		if (!user) {
+			throw new Error("User is not authenticated")
+		}
+		const userId = user.subject
+		const existingDoc = await ctx.db.get(args.id)
+		if (!existingDoc) {
+			throw new Error("Document not found")
+		}
+		if (existingDoc.userId !== userId) {
+			throw new Error("Unauthorized action")
+		}
+
+		const document = await ctx.db.delete(args.id)
+
+		return document
+	}
+})
+
+
