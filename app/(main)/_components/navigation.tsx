@@ -8,7 +8,7 @@ import {
   Settings,
   Trash
 } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import { ElementRef, useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { cn } from "@/lib/utils"
@@ -24,11 +24,12 @@ import {
   PopoverTrigger,
   PopoverContent
 } from "@/components/ui/popover"
-import { UserItem, PageItem, DocumentList, TrashBox } from "./index"
+import { UserItem, PageItem, DocumentList, TrashBox, Navbar } from "./index"
 import { toast } from "sonner"
 
 
 export const Navigation = () => {
+  const params = useParams()
   const dispatch = useAppDispatch()
   const pathname = usePathname()
   const isMobile = useMediaQuery("(max-width: 768px)")
@@ -202,6 +203,12 @@ export const Navigation = () => {
           isMobile && "left-0 w-full"
         )}
       >
+        {!!params.documentId ? (
+          <Navbar
+            onResetWidth={resetWidth}
+            isCollapsed={isCollapsed}
+          />
+        ): (
         <nav className="bg-transparent px-3 py-2 w-full">
           {isCollapsed && (
             <MenuIcon
@@ -211,6 +218,7 @@ export const Navigation = () => {
             />
           )}
         </nav>
+        )}
       </div>
     </>
   )
