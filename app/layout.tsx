@@ -1,9 +1,12 @@
+import { Provider } from "react-redux";
 import { Toaster } from "sonner"
+import StoreProvider from "./StoreProvider"
 import { ConvexClientProvider } from "@/components/providers/convex-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type { Metadata } from "next"
+
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -35,16 +38,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="notion-theme"
-          >
-            <Toaster position="bottom-center" />
-            {children}
-          </ThemeProvider>
+          <StoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              storageKey="notion-theme"
+            >
+              <Toaster position="bottom-center" />
+              {children}
+            </ThemeProvider>
+          </StoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
