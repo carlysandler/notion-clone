@@ -14,6 +14,8 @@ import { useMediaQuery } from "usehooks-ts"
 import { cn } from "@/lib/utils"
 import { api } from "@/convex/_generated/api"
 import { useMutation, useQuery } from "convex/react"
+import { useAppDispatch } from "@/lib/hooks"
+import { toggle } from "@/lib/features/search-dialog/searchDialogSlice"
 
 // components
 import {
@@ -26,6 +28,7 @@ import { toast } from "sonner"
 
 
 export const Navigation = () => {
+  const dispatch = useAppDispatch()
   const pathname = usePathname()
   const isMobile = useMediaQuery("(max-width: 768px)")
   const isResizingRef = useRef(false)
@@ -149,7 +152,7 @@ export const Navigation = () => {
             icon={Search}
             label="Search"
             isSearch
-            onClick={() => false}
+            onClick={() => dispatch(toggle(true))}
           />
           <PageItem
             icon={Settings}
