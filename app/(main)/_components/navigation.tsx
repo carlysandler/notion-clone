@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils"
 import { api } from "@/convex/_generated/api"
 import { useMutation, useQuery } from "convex/react"
 import { useAppDispatch } from "@/lib/hooks"
-import { toggle } from "@/lib/features/search-dialog/searchDialogSlice"
+import { toggle as toggleSearch } from "@/lib/features/dialog/searchDialogSlice"
+import { toggle as toggleSettings } from "@/lib/features/dialog/settingsDialogSlice"
 
 // components
 import {
@@ -152,12 +153,12 @@ export const Navigation = () => {
             icon={Search}
             label="Search"
             isSearch
-            onClick={() => dispatch(toggle(true))}
+            onClick={() => dispatch(toggleSearch(true))}
           />
           <PageItem
             icon={Settings}
             label="Settings"
-            onClick={() => false}
+            onClick={() => dispatch(toggleSettings(true))}
           />
           <PageItem
             icon={PlusCircle}

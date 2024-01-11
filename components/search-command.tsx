@@ -19,7 +19,7 @@ import {
 	useAppSelector
 } from "@/lib/hooks"
 import { api } from "@/convex/_generated/api"
-import { toggle } from "@/lib/features/search-dialog/searchDialogSlice"
+import { toggle } from "@/lib/features/dialog/searchDialogSlice"
 
 export const SearchCommand = () => {
 	const { user } = useUser()

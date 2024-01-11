@@ -3,6 +3,7 @@ import { Toaster } from "sonner"
 import StoreProvider from "./StoreProvider"
 import { ConvexClientProvider } from "@/components/providers/convex-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
+import { ModalProvider } from "@/components/providers/modal-provider";
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type { Metadata } from "next"
@@ -46,6 +47,7 @@ export default function RootLayout({
               disableTransitionOnChange
               storageKey="notion-theme"
             >
+              <ModalProvider />
               <Toaster position="bottom-center" />
               {children}
             </ThemeProvider>

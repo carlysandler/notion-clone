@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import SearchDialogReducer from "@/lib/features/search-dialog/searchDialogSlice"
+import SearchDialogReducer from "@/lib/features/dialog/searchDialogSlice"
+import SettingsDialogReducer from "@/lib/features/dialog/settingsDialogSlice"
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-			search: SearchDialogReducer
+			search: SearchDialogReducer,
+			settings: SettingsDialogReducer
 		},
   })
 }
