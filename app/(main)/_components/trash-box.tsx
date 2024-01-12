@@ -37,7 +37,6 @@ export const TrashBox = () => {
 	}, [search, documents])
 
 	const onClick = (documentId: Id<"documents">) => {
-		console.log(pathName)
 		router.push(`/documents/${documentId}`)
 	}
 
