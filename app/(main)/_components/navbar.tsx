@@ -7,8 +7,7 @@ import { MenuIcon } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
-import { Title } from "./index"
-import { Skeleton } from "@/components/ui/skeleton";
+import { Title, Banner, Menu } from "./index"
 
 interface NavbarProps {
   isCollapsed: boolean;
@@ -26,7 +25,7 @@ export const Navbar = ({
 
 	if (document === undefined) {
 		return (
-			<nav className="bg-background dark:bg-[#1F1F1F] flex items-center px-3 py-2 space-x-4">
+			<nav className="bg-background dark:bg-[#1F1F1F] flex items-center justify-between px-3 py-2 space-x-4">
 				<Title.Skeleton />
 			</nav>
 		)
@@ -48,8 +47,14 @@ export const Navbar = ({
 				)}
 				<div className="flex items-center justify-between w-full">
 					<Title initialData={document} />
+					<div className="flex items-center space-x-2">
+						<Menu documentId={document._id} />
+					</div>
 				</div>
 			</nav>
+			{document.isArchived && (
+				<Banner documentId={document._id}/>
+			)}
 		</>
 	)
 }

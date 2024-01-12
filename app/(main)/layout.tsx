@@ -9,7 +9,7 @@ import { SearchCommand } from "@/components/search-command"
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth()
-  if (isLoading) {
+  if (isLoading && isAuthenticated) {
     return (
       <div className="flex h-full items-center justify-center">
         <Spinner size="lg" />

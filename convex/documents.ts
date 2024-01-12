@@ -112,7 +112,7 @@ export const archive = mutation({
 })
 
 export const getTrash = query({
-	handler: async (ctx, args) => {
+	handler: async (ctx) => {
 		const user = await ctx.auth.getUserIdentity()
 		if (!user) {
 			throw new Error("User is not authenticated")
