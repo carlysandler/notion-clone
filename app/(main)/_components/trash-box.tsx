@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useRouter, usePathname } from "next/navigation"
 import { useQuery, useMutation } from "convex/react"
 import {
 	Search,
@@ -25,7 +25,8 @@ import {
 export const TrashBox = () => {
 	const router = useRouter()
 	const params = useParams()
-	const documents = useQuery(api.documents.get)
+	const pathName = usePathname()
+	const documents = useQuery(api.documents.getTrash)
 	const restoreDocument = useMutation(api.documents.restore)
 	const removeDocument = useMutation(api.documents.remove) 
 
@@ -36,7 +37,8 @@ export const TrashBox = () => {
 	}, [search, documents])
 
 	const onClick = (documentId: Id<"documents">) => {
-		router.push(`documents/${documentId}`)
+		console.log(pathName)
+		router.push(`/documents/${documentId}`)
 	}
 
 	const onRestore = (
@@ -122,7 +124,7 @@ export const TrashBox = () => {
 							</TooltipProvider>
 							<ConfirmModal 
 								onConfirm={() => onRemove(doc._id)}
-								action="delete this document"
+								action="delete"
 								>
 								<div
 									role="button"
