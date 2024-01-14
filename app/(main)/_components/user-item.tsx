@@ -15,11 +15,11 @@ export const UserItem = () => {
 						<Avatar className="h-5 w-5">
 							<AvatarImage src={user?.imageUrl}/>
 						</Avatar>
-						<span className="text-start font-medium line-clamp-1">
+						<span className="text-start text-muted-foreground font-medium line-clamp-1">
 							{user?.fullName}
 						</span>
 					</div>
-					<ChevronsLeftRight className="rotate-90 mx-2 text-muted-foregeound h-4 w-4" />
+					<ChevronsLeftRight className="rotate-90 mx-2 text-muted-foreground h-4 w-4" />
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent

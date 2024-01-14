@@ -7,7 +7,7 @@ import { MenuIcon } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
-import { Title, Banner, Menu } from "./index"
+import { Title, Banner, Menu, Publish } from "./index"
 
 interface NavbarProps {
   isCollapsed: boolean;
@@ -27,6 +27,9 @@ export const Navbar = ({
 		return (
 			<nav className="bg-background dark:bg-[#1F1F1F] flex items-center justify-between px-3 py-2 space-x-4">
 				<Title.Skeleton />
+				<div className="flex items-center space-x-2">
+					<Menu.Skeleton />
+				</div>
 			</nav>
 		)
 	}
@@ -48,6 +51,7 @@ export const Navbar = ({
 				<div className="flex items-center justify-between w-full">
 					<Title initialData={document} />
 					<div className="flex items-center space-x-2">
+						<Publish initialData={document} />
 						<Menu documentId={document._id} />
 					</div>
 				</div>

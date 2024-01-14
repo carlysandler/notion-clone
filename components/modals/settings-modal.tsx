@@ -18,13 +18,13 @@ export const SettingsModal = () => {
 		<Dialog open={isOpen} onOpenChange={() => dispatch(toggle(false))}>
 			<DialogContent>
 				<DialogHeader className="border-b pb-3">
-					<h2 className="text-lg font-medium">
+					<h2 className="text-lg font-medium text-[#3F3F3F] dark:text-[#CFCFCF] ">
 						My Settings
 					</h2>
 				</DialogHeader>
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col space-y-1">
-						<Label>
+						<Label className="text-[#3F3F3F] dark:text-[#CFCFCF]">
 							Appearance
 						</Label>
 						<span className="text-[0.8rem] text-muted-foreground">
