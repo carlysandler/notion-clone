@@ -10,6 +10,8 @@ import { api } from "@/convex/_generated/api"
 
 import { Button } from "@/components/ui/button"
 import { IconPicker } from "@/components/icon-picker"
+import { useAppDispatch } from "@/lib/hooks"
+import { toggle } from "@/lib/features/cover-image/coverImageSlice"
 
 interface ToolbarProps {
   initialData: Doc<"documents">
@@ -23,6 +25,8 @@ export const Toolbar = ({
   const inputRef = useRef<ElementRef<"textarea">>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState<string>(initialData.title)
+
+	const dispatch = useAppDispatch()
 
   const updateDocument = useMutation(api.documents.update)
 
@@ -104,7 +108,7 @@ export const Toolbar = ({
         )}
         {!initialData.coverImage && !preview && (
           <Button
-            onClick={() => {}}
+            onClick={() => dispatch(toggle(true))}
             className="text-muted-foreground text-xs"
             variant="outline"
             size="sm"
