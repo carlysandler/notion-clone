@@ -8,12 +8,12 @@ import {
   Settings,
   Trash
 } from "lucide-react"
-import { useParams, usePathname } from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 import { ElementRef, useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { cn } from "@/lib/utils"
 import { api } from "@/convex/_generated/api"
-import { useMutation, useQuery } from "convex/react"
+import { useMutation } from "convex/react"
 import { useAppDispatch } from "@/lib/hooks"
 import { toggle as toggleSearch } from "@/lib/features/dialog/searchDialogSlice"
 import { toggle as toggleSettings } from "@/lib/features/dialog/settingsDialogSlice"
@@ -39,11 +39,11 @@ export const Navigation = () => {
   const [isResetting, setIsResetting] = useState<boolean>(false)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(isMobile)
 
-  const documents = useQuery(api.documents.get)
+  const router = useRouter()
   const createDocument = useMutation(api.documents.create)
 
   const handleCreate = () => {
-    const promise = createDocument({ title: "Untitled" })
+    const promise = createDocument({ title: "Untitled" }).then((documentId) => router.push(`/documents/${documentId}`))
     toast.promise(promise, {
       loading: "Creating a new note...",
       success: "New note created!",
@@ -130,10 +130,13 @@ export const Navigation = () => {
   }
   return (
     <>
+    {/* Needed to change the z-index on the aside from 99999 to 999 in order for the editor to take priority in the stacking context.
+      Need to explore this issue more because directly manipulating the @BlockEditor css file like recommended did not work. 
+      Or even manipulating the element style temporarily in the DOM */}
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar bg-secondary overflow-y-auto relative w-60 flex flex-col z-[99999]",
+          "group/sidebar bg-secondary overflow-y-auto relative w-60 flex flex-col z-[999]",
           isResetting && "transition-all ease-in-out duration-300",
           isMobile && "w-0"
         )}

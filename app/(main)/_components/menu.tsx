@@ -32,7 +32,7 @@ export const Menu = ({
 	const archiveDocuument = useMutation(api.documents.archive)
 
 	const onArchive = () => {
-		const promise = archiveDocuument({ id: documentId })
+		const promise = archiveDocuument({ id: documentId }).then((documentId) => router.push(`/documents/${documentId}`))
 
 		toast.promise(promise, {
 			loading: "Moving to trash...",

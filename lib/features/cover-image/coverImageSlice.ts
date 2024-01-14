@@ -7,7 +7,8 @@ interface CoverImageSlice {
 }
 
 const initialState: CoverImageSlice =  {
-	isOpen: false
+	isOpen: false,
+	url: undefined
 }
 
 export const CoverImageSlice = createSlice({
@@ -15,7 +16,8 @@ export const CoverImageSlice = createSlice({
 	initialState,
 	reducers: {
 		toggle: (state, action: PayloadAction<boolean>) => {
-			state.isOpen = action.payload 
+			state.isOpen = action.payload
+			state.url = undefined
 		},
 		replace: (state, action: PayloadAction<string>) => {
 			state.isOpen = true
