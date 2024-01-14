@@ -47,7 +47,7 @@ export const Cover = ({
 				url && "bg-muted"
 			)}
 		>
-			{url && (
+			{!!url && (
 				<Image
 					src={url}
 					fill
