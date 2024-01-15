@@ -32,9 +32,6 @@ export const SearchCommand = () => {
     setIsMounted(true)
   }, [])
 
-
-type ShortcutAction = (e: KeyboardEvent<Element>) => void;
-
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
       if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
