@@ -28,7 +28,7 @@ export const SettingsModal = () => {
 							Appearance
 						</Label>
 						<span className="text-[0.8rem] text-muted-foreground">
-							Customize how Notion looks on your device
+							Customize how Scribble looks on your device
 						</span>
 					</div>
 					<ModeToggle />

@@ -13,7 +13,7 @@ import type { Metadata } from "next"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "New Notion",
+  title: "Scribble",
   description: "The connected workspace--work smarter, not harder.",
   icons: {
     icon: [
@@ -47,7 +47,7 @@ export default function RootLayout({
                 defaultTheme="system"
                 enableSystem
                 disableTransitionOnChange
-                storageKey="notion-theme"
+                storageKey="scribble-theme"
               >
                 <ModalProvider />
                 <Toaster position="bottom-center" />
