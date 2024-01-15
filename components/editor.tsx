@@ -10,13 +10,13 @@ import { useEdgeStore } from "@/lib/edgestore"
 interface EditorProps {
 	onChange: (value:string ) => void;
 	initialContent?: string;
-	editable: boolean;
+	editable?: boolean;
 }
 
 const Editor = ({
 	onChange,
 	initialContent,
-	editable
+	editable = true
 }: EditorProps) => {
 	const { resolvedTheme } = useTheme()
 	const { edgestore } = useEdgeStore()
@@ -29,6 +29,7 @@ const Editor = ({
 		return res.url
 	}
 
+	// TODO: What if i delete a block image. I should delete it from my edgestore...
 	const editor: BlockNoteEditor = useBlockNote({
 		editable,
 		initialContent: initialContent ? JSON.parse(initialContent) : undefined,

@@ -123,7 +123,7 @@ export const PageItem = ({
 					{documentIcon}
 				</div>
 			) : (
-				<Icon  className="h-[18px] text-muted-foreground mr-2 shrink-0"/>
+				<Icon className="h-[18px] w-[18px] text-muted-foreground mr-2 shrink-0"/>
 			)}
 			<span className="truncate">
 				{label}

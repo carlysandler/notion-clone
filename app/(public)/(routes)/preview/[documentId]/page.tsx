@@ -4,9 +4,8 @@ import { useMutation, useQuery } from "convex/react"
 import dynamic from "next/dynamic"
 import { useMemo } from "react"
 
-import { Id } from "@/convex/_generated/dataModel"
 import { api } from "@/convex/_generated/api"
-
+import { Id } from "@/convex/_generated/dataModel"
 import { Toolbar } from "@/components/toolbar"
 import { Cover } from "@/components/cover"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -17,30 +16,33 @@ interface DocumentIdPageProps {
   }
 }
 
-const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
+const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
+  const Editor = useMemo(
+    () => dynamic(() => import("@/components/editor")),
+    []
+  )
+
   const document = useQuery(api.documents.getById, {
     documentId: params.documentId,
   })
 
-	const Editor = useMemo(() => dynamic(() => import("@/components/editor"), { ssr: false }), [])
-	const updateDocument = useMutation(api.documents.update)
+  const updateDocument = useMutation(api.documents.update)
 
-	const onChange = (content: string) => {
-		updateDocument({
-			id: params.documentId,
-			content
-		})
-	}
+  const onChange = (content: string) => {
+    updateDocument({
+      id: params.documentId,
+      content,
+    })
+  }
 
-  if (document === null) {
+	if (document === null) {
     return <div>Not found</div>
   }
 
   if (document === undefined) {
     return (
       <div>
-        <div className="h-20" />
-				<Cover.Skeleton />
+        <Cover.Skeleton />
         <div className="md:max-w-3xl lg:max-w-4xl mx-auto mt-10">
           <div className="space-y-4 pl-8 pt-4">
             <Skeleton className="h-14 w-[50%]" />
@@ -52,21 +54,23 @@ const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
       </div>
     )
   }
-  return (
-    <div className="pb-40">
+
+	return (
+		<div className="pb-40">
       <Cover
         url={document.coverImage}
         preview={document.isPublished}
       />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-        <Toolbar initialData={document} />
+        <Toolbar initialData={document} preview />
 				<Editor
 					onChange={onChange}
 					initialContent={document.content}
+					editable={false}
 				/>
       </div>
     </div>
-  )
+	)
 }
 
-export default DocucmentIdPage
+export default DocumentIdPage
