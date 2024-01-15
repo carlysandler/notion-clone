@@ -35,7 +35,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     })
   }
 
-	if (document === null) {
+  if (document === null) {
     return <div>Not found</div>
   }
 
@@ -55,22 +55,22 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     )
   }
 
-	return (
-		<div className="pb-40">
+  return (
+    <div className="pb-40">
       <Cover
         url={document.coverImage}
         preview={document.isPublished}
       />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
         <Toolbar initialData={document} preview />
-				<Editor
-					onChange={onChange}
-					initialContent={document.content}
-					editable={false}
-				/>
+        <Editor
+          onChange={onChange}
+          initialContent={document.content}
+          editable={false}
+        />
       </div>
     </div>
-	)
+  )
 }
 
 export default DocumentIdPage

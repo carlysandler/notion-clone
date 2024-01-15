@@ -94,7 +94,7 @@ export const Publish = ({ initialData }: PublishProps) => {
                 )}
               </Button>
             </div>
-						<Button
+            <Button
               size="sm"
               className="w-full text-xs"
               disabled={isSubmitting}

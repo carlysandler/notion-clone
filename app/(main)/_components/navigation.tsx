@@ -1,12 +1,12 @@
 "use client"
-import { 
-  ChevronsLeft, 
-  MenuIcon, 
-  Plus, 
-  PlusCircle, 
-  Search, 
+import {
+  ChevronsLeft,
+  MenuIcon,
+  Plus,
+  PlusCircle,
+  Search,
   Settings,
-  Trash
+  Trash,
 } from "lucide-react"
 import { useParams, usePathname, useRouter } from "next/navigation"
 import { ElementRef, useEffect, useRef, useState } from "react"
@@ -22,11 +22,16 @@ import { toggle as toggleSettings } from "@/lib/features/dialog/settingsDialogSl
 import {
   Popover,
   PopoverTrigger,
-  PopoverContent
+  PopoverContent,
 } from "@/components/ui/popover"
-import { UserItem, PageItem, DocumentList, TrashBox, Navbar } from "./index"
+import {
+  UserItem,
+  PageItem,
+  DocumentList,
+  TrashBox,
+  Navbar,
+} from "./index"
 import { toast } from "sonner"
-
 
 export const Navigation = () => {
   const params = useParams()
@@ -43,11 +48,13 @@ export const Navigation = () => {
   const createDocument = useMutation(api.documents.create)
 
   const handleCreate = () => {
-    const promise = createDocument({ title: "Untitled" }).then((documentId) => router.push(`/documents/${documentId}`))
+    const promise = createDocument({ title: "Untitled" }).then(
+      (documentId) => router.push(`/documents/${documentId}`)
+    )
     toast.promise(promise, {
       loading: "Creating a new note...",
       success: "New note created!",
-      error: "Failed to create a new note."
+      error: "Failed to create a new note.",
     })
   }
 
@@ -130,7 +137,7 @@ export const Navigation = () => {
   }
   return (
     <>
-    {/* Needed to change the z-index on the aside from 99999 to 999 in order for the editor to take priority in the stacking context.
+      {/* Needed to change the z-index on the aside from 99999 to 999 in order for the editor to take priority in the stacking context.
       Need to explore this issue more because directly manipulating the @BlockEditor css file like recommended did not work. 
       Or even manipulating the element style temporarily in the DOM */}
       <aside
@@ -179,17 +186,14 @@ export const Navigation = () => {
           />
           <Popover>
             <PopoverTrigger className="w-full mt-4">
-              <PageItem
-                icon={Trash}
-                label="Trash"
-              />
+              <PageItem icon={Trash} label="Trash" />
             </PopoverTrigger>
-              <PopoverContent
-                className="p-0 w-72"
-                side={isMobile ? "bottom" : "right"}
-              >
-                <TrashBox />
-              </PopoverContent>
+            <PopoverContent
+              className="p-0 w-72"
+              side={isMobile ? "bottom" : "right"}
+            >
+              <TrashBox />
+            </PopoverContent>
           </Popover>
         </div>
         <div
@@ -211,16 +215,16 @@ export const Navigation = () => {
             onResetWidth={resetWidth}
             isCollapsed={isCollapsed}
           />
-        ): (
-        <nav className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && (
-            <MenuIcon
-              onClick={resetWidth}
-              role="button"
-              className="h-6 w-6 text-muted-foreground"
-            />
-          )}
-        </nav>
+        ) : (
+          <nav className="bg-transparent px-3 py-2 w-full">
+            {isCollapsed && (
+              <MenuIcon
+                onClick={resetWidth}
+                role="button"
+                className="h-6 w-6 text-muted-foreground"
+              />
+            )}
+          </nav>
         )}
       </div>
     </>

@@ -1,22 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit"
 
 interface SettingsSlice {
-	isOpen: boolean;
+  isOpen: boolean
 }
 
-const initialState: SettingsSlice =  {
-	isOpen: false
+const initialState: SettingsSlice = {
+  isOpen: false,
 }
 
 export const settingsSlice = createSlice({
-	name: "settingsDialog",
-	initialState,
-	reducers: {
-		toggle: (state, action: PayloadAction<boolean>) => {
-			state.isOpen = action.payload 
-		}
-	}
+  name: "settingsDialog",
+  initialState,
+  reducers: {
+    toggle: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload
+    },
+  },
 })
 
 export const { toggle } = settingsSlice.actions

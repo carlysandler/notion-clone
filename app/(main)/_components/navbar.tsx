@@ -1,64 +1,62 @@
-"use client";
+"use client"
 
-import { useQuery } from "convex/react";
-import { useParams } from "next/navigation";
-import { MenuIcon } from "lucide-react";
+import { useQuery } from "convex/react"
+import { useParams } from "next/navigation"
+import { MenuIcon } from "lucide-react"
 
-import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api"
+import { Id } from "@/convex/_generated/dataModel"
 
 import { Title, Banner, Menu, Publish } from "./index"
 
 interface NavbarProps {
-  isCollapsed: boolean;
-  onResetWidth: () => void;
+  isCollapsed: boolean
+  onResetWidth: () => void
 }
 
 export const Navbar = ({
   isCollapsed,
-  onResetWidth
+  onResetWidth,
 }: NavbarProps) => {
-	const params = useParams()
-	const document = useQuery(api.documents.getById, {
-		documentId: params.documentId as Id<"documents">
-	})
+  const params = useParams()
+  const document = useQuery(api.documents.getById, {
+    documentId: params.documentId as Id<"documents">,
+  })
 
-	if (document === undefined) {
-		return (
-			<nav className="bg-background dark:bg-[#1F1F1F] flex items-center justify-between px-3 py-2 space-x-4">
-				<Title.Skeleton />
-				<div className="flex items-center space-x-2">
-					<Menu.Skeleton />
-				</div>
-			</nav>
-		)
-	}
+  if (document === undefined) {
+    return (
+      <nav className="bg-background dark:bg-[#1F1F1F] flex items-center justify-between px-3 py-2 space-x-4">
+        <Title.Skeleton />
+        <div className="flex items-center space-x-2">
+          <Menu.Skeleton />
+        </div>
+      </nav>
+    )
+  }
 
-	if (document === null) {
-		return null
-	}
-	
-	return (
-		<>
-			<nav className="bg-background dark:bg-[#1F1F1F] flex items-center px-3 py-2 space-x-4">
-				{ isCollapsed && (
-					<MenuIcon
-						role="button"
-						onClick={onResetWidth}
-						className="h-6 w-6 text-muted-foreground"
-					/>
-				)}
-				<div className="flex items-center justify-between w-full">
-					<Title initialData={document} />
-					<div className="flex items-center space-x-2">
-						<Publish initialData={document} />
-						<Menu documentId={document._id} />
-					</div>
-				</div>
-			</nav>
-			{document.isArchived && (
-				<Banner documentId={document._id}/>
-			)}
-		</>
-	)
+  if (document === null) {
+    return null
+  }
+
+  return (
+    <>
+      <nav className="bg-background dark:bg-[#1F1F1F] flex items-center px-3 py-2 space-x-4">
+        {isCollapsed && (
+          <MenuIcon
+            role="button"
+            onClick={onResetWidth}
+            className="h-6 w-6 text-muted-foreground"
+          />
+        )}
+        <div className="flex items-center justify-between w-full">
+          <Title initialData={document} />
+          <div className="flex items-center space-x-2">
+            <Publish initialData={document} />
+            <Menu documentId={document._id} />
+          </div>
+        </div>
+      </nav>
+      {document.isArchived && <Banner documentId={document._id} />}
+    </>
+  )
 }

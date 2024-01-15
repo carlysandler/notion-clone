@@ -1,4 +1,4 @@
-import { Provider } from "react-redux";
+import { Provider } from "react-redux"
 import { Toaster } from "sonner"
 import StoreProvider from "./StoreProvider"
 import { ConvexClientProvider } from "@/components/providers/convex-provider"
@@ -8,7 +8,6 @@ import { EdgeStoreProvider } from "@/lib/edgestore"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type { Metadata } from "next"
-
 
 const inter = Inter({ subsets: ["latin"] })
 

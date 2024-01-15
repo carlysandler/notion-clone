@@ -23,11 +23,15 @@ const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
     documentId: params.documentId,
   })
 
-	const Editor = useMemo(() => dynamic(() => import("@/components/editor"), { ssr: false }), [])
+  const Editor = useMemo(
+    () =>
+      dynamic(() => import("@/components/editor"), { ssr: false }),
+    []
+  )
   const { edgestore } = useEdgeStore()
-	const updateDocument = useMutation(api.documents.update)
+  const updateDocument = useMutation(api.documents.update)
 
-   /**
+  /**
    * 
    * Compare the document object content with the updated content string onChange
    * If an image exists in the document but not in the updated content, the user has removed the image block
@@ -46,38 +50,50 @@ const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
   },
    */
 
-
   const handleDeleteImg = async (url: string) => {
     await edgestore.publicFiles.delete({ url })
   }
 
-  const parseAndExtractImageContent = (content: string | undefined, idOnly: boolean) => {
+  const parseAndExtractImageContent = (
+    content: string | undefined,
+    idOnly: boolean
+  ) => {
     if (content === undefined) {
       return []
     }
     const parsed = JSON.parse(content)
-    const images = parsed.filter((content: { type: string }) => content.type === "image")
-    return idOnly ? images.map((img: { id: string }) => img.id) : images.map((img: { id: string; props: { url: string }}) => { return { id: img.id, url: img.props.url }})
+    const images = parsed.filter(
+      (content: { type: string }) => content.type === "image"
+    )
+    return idOnly
+      ? images.map((img: { id: string }) => img.id)
+      : images.map((img: { id: string; props: { url: string } }) => {
+          return { id: img.id, url: img.props.url }
+        })
   }
 
   const documentContentImagesById = useMemo(() => {
-    const imagesById: { [key:string]: { id: string; url: string }} = {}
-    const images = parseAndExtractImageContent(document?.content, false)
-    images.forEach((img: { id: string; url: string}) => {
-      imagesById[img.id] = img 
+    const imagesById: { [key: string]: { id: string; url: string } } =
+      {}
+    const images = parseAndExtractImageContent(
+      document?.content,
+      false
+    )
+    images.forEach((img: { id: string; url: string }) => {
+      imagesById[img.id] = img
     })
     return imagesById
+  }, [document?.content])
 
-  }, [document?.content]) 
-
-	const onChange = async (content: string) => {
+  const onChange = async (content: string) => {
     const updatedImageIds = parseAndExtractImageContent(content, true)
     const imageIds = Object.keys(documentContentImagesById)
     for (let i = 0; i < imageIds.length; i++) {
       // if the original imgId doesn't exist in the updated content, delete the imgage from edgestore
       if (!updatedImageIds.includes(imageIds[i])) {
-        await handleDeleteImg(documentContentImagesById[imageIds[i]].url)
-
+        await handleDeleteImg(
+          documentContentImagesById[imageIds[i]].url
+        )
       }
     }
     updateDocument({
@@ -94,7 +110,7 @@ const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
     return (
       <div>
         <div className="h-20" />
-				<Cover.Skeleton />
+        <Cover.Skeleton />
         <div className="md:max-w-3xl lg:max-w-4xl mx-auto mt-10">
           <div className="space-y-4 pl-8 pt-4">
             <Skeleton className="h-14 w-[50%]" />
@@ -114,10 +130,10 @@ const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
       />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
         <Toolbar initialData={document} />
-				<Editor
-					onChange={onChange}
-					initialContent={document.content}
-				/>
+        <Editor
+          onChange={onChange}
+          initialContent={document.content}
+        />
       </div>
     </div>
   )

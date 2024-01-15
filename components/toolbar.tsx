@@ -42,7 +42,6 @@ export const Toolbar = ({
 
   const disableInput = () => setIsEditing(false)
 
-
   const onInput = (value: string) => {
     setValue(value)
     updateDocument({
