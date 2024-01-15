@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix"
+    "lint": "next lint --fix",
+    "prettier:lint": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "@blocknote/core": "^0.11.0",

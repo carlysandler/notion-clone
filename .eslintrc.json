@@ -4,12 +4,13 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
-  "plugins": [
-    "prettier"
-  ],
+  "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "react/jsx-max-props-per-line": [1, { "maximum": 1, "when": "multiline" }]
+    "react/jsx-max-props-per-line": [
+      1,
+      { "maximum": 1, "when": "multiline" }
+    ]
   },
   "parserOptions": {
     "ecmaFeatures": {
