@@ -32,15 +32,18 @@ export const SearchCommand = () => {
     setIsMounted(true)
   }, [])
 
+
+type ShortcutAction = (e: KeyboardEvent<Element>) => void;
+
   useEffect(() => {
-    const down = (ev: KeyboardEvent) => {
-      if (ev.key === "k" && (ev.metaKey || ev.ctrlKey)) {
-        ev.preventDefault()
+    const down = (event: KeyboardEvent) => {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault()
         dispatch(toggle(!isOpen))
       }
     }
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
+    document.addEventListener("keydown", down as any)
+    return () => document.removeEventListener("keydown", down as any)
   }, [dispatch, isOpen])
 
   const onSelect = (id: string) => {
