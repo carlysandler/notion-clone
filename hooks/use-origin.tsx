@@ -7,7 +7,6 @@ export const useOrigin = () => {
       ? window.location.origin
       : ""
 
-			console.log("progom", origin)
   useEffect(() => {
     setMounted(true)
   }, [])

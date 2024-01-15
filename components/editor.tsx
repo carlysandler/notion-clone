@@ -29,6 +29,7 @@ const Editor = ({
 		return res.url
 	}
 
+	// TODO: What if i delete a block image. I should delete it from my edgestore...
 	const editor: BlockNoteEditor = useBlockNote({
 		editable,
 		initialContent: initialContent ? JSON.parse(initialContent) : undefined,

@@ -26,7 +26,7 @@ export const Toolbar = ({
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState<string>(initialData.title)
 
-	const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
 
   const updateDocument = useMutation(api.documents.update)
 
@@ -42,19 +42,13 @@ export const Toolbar = ({
 
   const disableInput = () => setIsEditing(false)
 
+
   const onInput = (value: string) => {
     setValue(value)
     updateDocument({
       id: initialData._id,
       title: value || "Untitled",
     })
-  }
-
-  const onKeyDown = (
-    event: React.KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    event.preventDefault()
-    disableInput()
   }
 
   const onIconSelect = (icon: string) => {
@@ -64,12 +58,12 @@ export const Toolbar = ({
     })
   }
 
-	const onRemoveIcon = () => {
-		updateDocument({
-			id: initialData._id,
-			icon: ""
-		})
-	}
+  const onRemoveIcon = () => {
+    updateDocument({
+      id: initialData._id,
+      icon: "",
+    })
+  }
 
   return (
     <div className="pl-[54px] group relative">
@@ -82,9 +76,9 @@ export const Toolbar = ({
           </IconPicker>
           <Button
             onClick={onRemoveIcon}
-						variant="outline"
+            variant="outline"
             className="rounded-full opacity-0 group-hover/icon:opacity-100 transition text-muted-foreground text-xs"
-						size="icon"
+            size="icon"
           >
             <X className="h-4-w-4" />
           </Button>
@@ -122,7 +116,6 @@ export const Toolbar = ({
         <TextareaAutoResize
           ref={inputRef}
           onBlur={disableInput}
-          onKeyDown={onKeyDown}
           value={value}
           onChange={(e) => onInput(e.target.value)}
           className="text-5xl bg-transparent font-bold outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none break-words"
@@ -138,3 +131,15 @@ export const Toolbar = ({
     </div>
   )
 }
+
+/**
+ * Legacy Code:
+ * 
+ * 
+ *   const onKeyDown = (
+   event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+     event.preventDefault()
+  disableInput()
+  }
+ */
