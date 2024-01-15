@@ -27,7 +27,7 @@ const DocucmentIdPage = ({ params }: DocumentIdPageProps) => {
   const { edgestore } = useEdgeStore()
 	const updateDocument = useMutation(api.documents.update)
 
-   /**
+  /**
    * 
    * Compare the document object content with the updated content string onChange
    * If an image exists in the document but not in the updated content, the user has removed the image block
